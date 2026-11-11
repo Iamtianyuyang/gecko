@@ -1,15 +1,21 @@
 {
-  "name": "code-ref-copy",
-  "displayName": "Code Ref Copy",
+  "name": "gecko",
+  "publisher": "tianyy",
+  "displayName": "Gecko",
   "description": "Copy selected code with workspace-relative file path and line numbers.",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "test": "node --test"
+  },
   "engines": {
     "vscode": "^1.74.0"
   },
-  "categories": ["Other"],
+  "categories": [
+    "Other"
+  ],
   "main": "./extension.js",
-  "activationEvents": ["onCommand:codeRef.copy"],
+  "icon": "assets/logo/gecko.png",
   "contributes": {
     "commands": [
       {

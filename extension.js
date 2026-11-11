@@ -17,17 +17,21 @@ function activate(context) {
       // An exclusive selection end at column 0 belongs to the previous line.
       const lastOffset = document.offsetAt(selection.end) - 1;
       const end = document.positionAt(lastOffset).line + 1;
-      const code = document.getText(selection);
+      // A selection ending at column 0 carries a trailing newline the template adds itself.
+      const code = document.getText(selection).replace(/\r?\n$/, '');
       // Use a safe fence even if the selected code contains backticks.
-      const maxTicks = Math.max(3, ...Array.from(code.matchAll(/`+/g), match => match[0].length + 1));
+      let maxTicks = 3;
+      for (const match of code.matchAll(/`+/g)) maxTicks = Math.max(maxTicks, match[0].length + 1);
       const fence = '`'.repeat(maxTicks);
       const text = `@${path}:${start}-${end}\n\n${fence}${document.languageId}\n${code}\n${fence}`;
 
-      await vscode.env.clipboard.writeText(text);
+      try {
+        await vscode.env.clipboard.writeText(text);
+      } catch (error) {
+        vscode.window.showErrorMessage(`Copy failed: ${error.message}`);
+      }
     })
   );
 }
 
-function deactivate() {}
-
-module.exports = { activate, deactivate };
+module.exports = { activate };
