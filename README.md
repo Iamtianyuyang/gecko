@@ -1,5 +1,7 @@
 # Gecko
 
+<img src="assets/logo/gecko.png" alt="Gecko" width="180">
+
 A small VS Code extension. Select code, press one key, and the clipboard gets the selection with its workspace-relative file path and line range.
 
 ## Usage
