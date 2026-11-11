@@ -1,0 +1,38 @@
+{
+  "name": "code-ref-copy",
+  "displayName": "Code Ref Copy",
+  "description": "Copy selected code with workspace-relative file path and line numbers.",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": ["Other"],
+  "main": "./extension.js",
+  "activationEvents": ["onCommand:codeRef.copy"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeRef.copy",
+        "title": "Copy Code with File Path and Line Numbers"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "codeRef.copy",
+        "key": "ctrl+alt+c",
+        "mac": "cmd+alt+c",
+        "when": "editorTextFocus && editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "codeRef.copy",
+          "when": "editorHasSelection",
+          "group": "9_cutcopypaste"
+        }
+      ]
+    }
+  }
+}
