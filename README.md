@@ -26,3 +26,7 @@ Save the file first; an unsaved buffer gets a warning instead of a copy. In a wo
 ## Requirements
 
 VS Code 1.74 or later. The extension has no dependencies, no build step, and makes no network requests.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

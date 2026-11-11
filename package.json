@@ -1,6 +1,11 @@
 {
   "name": "gecko",
   "publisher": "tianyy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Iamtianyuyang/gecko.git"
+  },
+  "license": "MIT",
   "displayName": "Gecko",
   "description": "Copy selected code with workspace-relative file path and line numbers.",
   "version": "0.0.1",
