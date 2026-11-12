@@ -61,6 +61,7 @@ function makeDocument(text, overrides = {}) {
   };
   return {
     isUntitled: false,
+    isDirty: false,
     languageId: 'typescript',
     uri: {},
     offsetAt,
@@ -110,6 +111,32 @@ test('does nothing for an empty selection, an untitled file, or no editor', asyn
   assert.match((await copy({ document: makeDocument(SRC, { isUntitled: true }), start: { line: 0, character: 0 }, end: { line: 0, character: 5 } })).warned, /save/i);
   const noEditor = await copy({ document: null });
   assert.strictEqual(noEditor.written ?? noEditor.warned ?? noEditor.failure, undefined);
+});
+
+test('warns instead of copying a file with unsaved changes', async () => {
+  const { written, warned } = await copy({ document: makeDocument(SRC, { isDirty: true }), start: { line: 0, character: 0 }, end: { line: 0, character: 5 } });
+  assert.strictEqual(written, undefined);
+  assert.match(warned, /save/i);
+});
+
+test('CRLF file ending at column 0 leaves no stray carriage return', async () => {
+  const document = makeDocument('a\r\nb\r\n');
+  const { written } = await copy({ document, start: { line: 0, character: 0 }, end: { line: 1, character: 0 } });
+  assert.strictEqual(written, '@src/core/engine.ts:1-1\n\n```typescript\na\n```');
+});
+
+test('selection ending at the end of a file without a final newline', async () => {
+  const document = makeDocument('x\ny\nz');
+  const { written } = await copy({ document, start: { line: 2, character: 0 }, end: { line: 2, character: 1 } });
+  assert.strictEqual(written, '@src/core/engine.ts:3-3\n\n```typescript\nz\n```');
+});
+
+test('package.json contributes exactly the commands the extension registers', () => {
+  const { contributes } = require('../package.json');
+  const ids = contributes.commands.map(c => c.command);
+  assert.deepStrictEqual(ids, [command.id]);
+  for (const binding of contributes.keybindings) assert.ok(ids.includes(binding.command), binding.command);
+  for (const item of contributes.menus['editor/context']) assert.ok(ids.includes(item.command), item.command);
 });
 
 test('reports a clipboard failure instead of throwing', async () => {

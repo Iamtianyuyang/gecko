@@ -7,7 +7,7 @@ function activate(context) {
       if (!editor || editor.selection.isEmpty) return;
 
       const { document, selection } = editor;
-      if (document.isUntitled) {
+      if (document.isUntitled || document.isDirty) {
         vscode.window.showWarningMessage('Save the file before copying a code reference.');
         return;
       }

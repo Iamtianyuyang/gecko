@@ -2,7 +2,7 @@
 
 <img src="assets/logo/gecko.png" alt="Gecko" width="180">
 
-A small VS Code extension. Select code, press one key, and the clipboard gets the selection with its workspace-relative file path and line range.
+A small VS Code extension that copies the selected code to the clipboard, prefixed with its workspace-relative path and line range.
 
 ## Usage
 
@@ -23,11 +23,11 @@ function calculate() {
 ```
 ````
 
-Save the file first; an unsaved buffer gets a warning instead of a copy. In a workspace with several roots, the relative path may begin with the workspace folder name.
+Save the file first. If it has unsaved changes, you get a warning instead of a copy. In a multi-root workspace, the relative path may begin with the workspace folder name. A file outside every workspace folder is copied with its absolute path.
 
 ## Requirements
 
-VS Code 1.74 or later. The extension has no dependencies, no build step, and makes no network requests.
+VS Code 1.74 or later. No dependencies, no build step, no network requests.
 
 ## License
 
