@@ -8,7 +8,7 @@
   "license": "MIT",
   "displayName": "Gecko",
   "description": "Copy selected code with workspace-relative file path and line numbers.",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "private": true,
   "scripts": {
     "test": "node --test"
